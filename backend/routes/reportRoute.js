@@ -7,7 +7,7 @@ const {
 
 const router = express.Router();
 
-roter.get("/export/tasks", protect, adminOnly, exportTasksReport);
+router.get("/export/tasks", protect, adminOnly, exportTasksReport);
 router.get("/export/users", protect, adminOnly, exportUsersReport);
 
 module.exports = router;
