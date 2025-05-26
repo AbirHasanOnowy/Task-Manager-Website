@@ -10,10 +10,14 @@ export const UserProvider = ({ children }) => {
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        if (user) return;
+        const storedUser = localStorage.getItem('user')
+        const token = localStorage.getItem('token')
 
-        const accessToken = localStorage.getItem('token')
-        if (!accessToken) {
+        if (storedUser) {
+            setUser(JSON.parse(storedUser))
+        }
+
+        if (!token) {
             setLoading(false)
             return
         }
@@ -22,26 +26,33 @@ export const UserProvider = ({ children }) => {
             try {
                 const response = await axiosInstance.get(API_PATHS.AUTH.GET_PROFILE)
                 setUser(response.data)
+                localStorage.setItem('user', JSON.stringify(response.data))
             } catch (error) {
                 console.error('Failed to fetch user profile:', error)
+                clearUser()
             } finally {
                 setLoading(false)
             }
         }
 
         fetchUser()
-    }, [user])
+    }, [])
+
 
     const updateUser = async (userData) => {
         setUser(userData)
+        localStorage.setItem('user', JSON.stringify(userData))
         localStorage.setItem('token', userData.token)
         setLoading(false)
     }
 
+
     const clearUser = () => {
         setUser(null)
         localStorage.removeItem('token')
+        localStorage.removeItem('user')
     }
+
 
 
     return (

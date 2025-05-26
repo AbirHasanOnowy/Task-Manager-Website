@@ -301,7 +301,7 @@ const getDashboardData = async (req, res) => {
     });
 
     // Ensure all possible task statuses are included
-    const taskStatuses = ["Prnding", "In Progress", "Completed"];
+    const taskStatuses = ["Pending", "In Progress", "Completed"];
     const taskDistributionRow = await Task.aggregate([
       {
         $group: {
@@ -313,9 +313,8 @@ const getDashboardData = async (req, res) => {
 
     const taskDistribution = taskStatuses.reduce((acc, status) => {
       const formatedKey = status.replace(/\s+/g, "");
-      acc[formatedKey] = taskDistributionRow.find((item) => item._id === status)
-        ? status.count
-        : 0;
+      acc[formatedKey] =
+        taskDistributionRow.find((item) => item._id === status)?.count || 0;
       return acc;
     }, {});
 
@@ -348,6 +347,7 @@ const getDashboardData = async (req, res) => {
       statistics: {
         totalTasks,
         pendingTasks,
+        inProgressTasks,
         completedTasks,
         overdueTasks,
       },

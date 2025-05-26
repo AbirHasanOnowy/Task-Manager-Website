@@ -105,7 +105,8 @@ const loginUser = async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
-      profileImage: user.profileImage,
+      profileImageUrl: user.profileImageUrl,
+      profileImagePublicId: user.profileImagePublicId,
       role: user.role,
       token: generateToken(user._id),
     });
