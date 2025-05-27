@@ -14,12 +14,13 @@ import SignUp from './pages/Auth/SignUp'
 import PrivateRoute from './routes/PrivateRoute'
 import Dashboard from './pages/admin/Dashboard'
 import ManageTasks from './pages/admin/ManageTasks'
-import CreateTask from './pages/admin/CreateTask'
+import CreateTask from './pages/Admin/CreateTask'
 import ManageUsers from './pages/admin/ManageUsers'
 
 import UserDashboard from './pages/User/UserDashboard'
 import MyTasks from './pages/User/MyTasks'
 import ViewTaskDetails from './pages/User/ViewTaskDetails'
+import { Toaster } from 'react-hot-toast'
 
 const App = () => {
   return (
@@ -50,6 +51,15 @@ const App = () => {
           </Routes>
         </Router>
       </div>
+
+      <Toaster
+        toastOptions={{
+          className: '',
+          style: {
+            fontSize: '13px',
+          },
+        }}
+      />
     </UserProvider>
   )
 }

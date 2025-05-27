@@ -137,7 +137,8 @@ const getUserProfile = async (req, res) => {
 // @access Private (require JWT token)
 const updateUserProfile = async (req, res) => {
   try {
-    const { name, email, password, profileImage } = req.body;
+    const { name, email, password, profileImageUrl, profileImagePublicId } =
+      req.body;
 
     if (!name || !email) {
       return res.status(400).json({ message: "Please fill in all fields" });
@@ -154,8 +155,12 @@ const updateUserProfile = async (req, res) => {
         user.password = await bcrypt.hash(password, salt);
       }
 
-      if (profileImage) {
-        user.profileImage = profileImage;
+      if (profileImageUrl) {
+        user.profileImageUrl = profileImageUrl;
+      }
+
+      if (profileImagePublicId) {
+        user.profileImagePublicId = profileImagePublicId;
       }
 
       const updatedUser = await user.save();
@@ -164,7 +169,8 @@ const updateUserProfile = async (req, res) => {
         _id: updatedUser._id,
         name: updatedUser.name,
         email: updatedUser.email,
-        profileImage: updatedUser.profileImage,
+        profileImageUrl: updatedUser.profileImageUrl,
+        profileImagePublicId: updatedUser.profileImagePublicId,
         role: updatedUser.role,
         token: generateToken(updatedUser._id),
       });

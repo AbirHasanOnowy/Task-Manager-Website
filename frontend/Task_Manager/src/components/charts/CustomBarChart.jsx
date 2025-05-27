@@ -15,13 +15,13 @@ import PredefinedToolTip from './CustomTooltip.jsx';
 const CustomBarChart = ({ data }) => {
     // alternate colors via function
     const getBarColor = (entry) => {
-        switch (entry?.priority) {
+        switch (entry?.status) {
             case 'Low':
                 return '#00BC7D'; // Green
             case 'Medium':
                 return '#FE9900'; // Orange
             case 'High':
-                return '#FF1F57'; // Red
+                return '#FF1F57'; // Pink
             default:
                 return '#00BC7D'; // Green
         }
