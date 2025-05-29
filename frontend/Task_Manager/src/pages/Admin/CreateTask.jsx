@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import DashboardLayout from '../../components/layouts/DashboardLayout'
 import { PRIORITY_DATA } from '../../utils/data'
 import axiosInstance from '../../utils/axiosInstance'
@@ -11,6 +11,8 @@ import SelectDropdown from '../../components/Inputs/SelectDropdown'
 import SelectUsers from '../../components/Inputs/SelectUsers'
 import TodoListInput from '../../components/Inputs/TodoListInput'
 import AddAttachmentsInput from '../../components/Inputs/AddAttachmentsInput'
+import Modal from '../../components/Modal'
+import DeleteAlert from '../../components/DeleteAlert'
 
 const CreateTask = () => {
     const location = useLocation()
@@ -83,7 +85,39 @@ const CreateTask = () => {
         }
     }
 
-    const updateTask = async () => { }
+    const updateTask = async () => {
+        setLoading(true)
+
+        try {
+            const todoList = taskData.todoChecklist?.map((item) => {
+                const prevTodoChecklist = currentTask?.todoChecklist || [];
+                const matchedTask = prevTodoChecklist.find((todo) => todo.text === item);
+
+                return {
+                    text: item,
+                    completed: matchedTask ? matchedTask.completed : false
+                };
+            })
+
+            const response = await axiosInstance.put(API_PATHS.TASKS.UPDATE_TASK(taskId), {
+                ...taskData,
+                dueDate: new Date(taskData.dueDate).toISOString(),
+                todoChecklist: todoList
+            })
+
+            if (response.data) {
+                toast.success("Task updated successfully")
+            } else {
+                toast.error("Failed to update task")
+            }
+
+        } catch (error) {
+            console.error("Error updating task:", error)
+            toast.error("Failed to update task")
+        } finally {
+            setLoading(false)
+        }
+    }
 
     const handleSubmit = async () => {
         setError(null)
@@ -126,15 +160,16 @@ const CreateTask = () => {
             setLoading(true)
             const response = await axiosInstance.get(API_PATHS.TASKS.GET_TASK_BY_ID(taskId))
             if (response.data) {
-                setCurrentTask(response.data)
+                const taskInfo = response.data
+                setCurrentTask(taskInfo)
                 setTaskData({
-                    title: response.data.title,
-                    description: response.data.description,
-                    priority: response.data.priority,
-                    dueDate: response.data.dueDate ? moment(response.data.dueDate).format('YYYY-MM-DD') : null,
-                    assignedTo: response.data.assignedTo || [],
-                    todoChecklist: response.data.todoChecklist || [],
-                    attachments: response.data.attachments || []
+                    title: taskInfo.title,
+                    description: taskInfo.description,
+                    priority: taskInfo.priority,
+                    dueDate: taskInfo.dueDate ? moment(taskInfo.dueDate).format('YYYY-MM-DD') : null,
+                    assignedTo: taskInfo.assignedTo?.map((user) => user?._id) || [],
+                    todoChecklist: taskInfo.todoChecklist?.map((todo) => todo?.text) || [],
+                    attachments: taskInfo.attachments || []
                 })
             }
         } catch (error) {
@@ -151,7 +186,10 @@ const CreateTask = () => {
             const response = await axiosInstance.delete(API_PATHS.TASKS.DELETE_TASK(taskId))
             if (response.data) {
                 toast.success("Task deleted successfully")
+                setOpenDeleteAlert(false)
                 navigate('/admin/tasks')
+            } else {
+                toast.error("Failed to delete task")
             }
         } catch (error) {
             console.error("Error deleting task:", error)
@@ -160,6 +198,15 @@ const CreateTask = () => {
             setLoading(false)
         }
     }
+
+    useEffect(() => {
+        if (taskId) {
+            getTaskDetailsById(taskId)
+        }
+        return () => {
+            // clearData()
+        }
+    }, [taskId])
 
     return (
         <DashboardLayout activeMenu="Create Task">
@@ -172,9 +219,9 @@ const CreateTask = () => {
                             </h2>
 
                             {taskId && (
-                                <button className='flex items-center gap-1.5 text-[13px] font-medium text-rose-50 rounded px-2 py-1 border border-rose-100 hover:bg-rose-300 cursor-pointer'
+                                <button className='flex items-center gap-1.5 text-[13px] font-medium text-rose-300 rounded px-2 py-1 border border-rose-300 hover:bg-rose-300 hover:text-white cursor-pointer'
                                     onClick={() => setOpenDeleteAlert(true)}>
-                                    <LuTrash2 className='text-base' />
+                                    <LuTrash2 className='text-sm' />
                                     Delete
                                 </button>
                             )}
@@ -277,6 +324,18 @@ const CreateTask = () => {
                     </div>
                 </div>
             </div>
+
+            <Modal
+                isOpen={openDeleteAlert}
+                onClose={() => setOpenDeleteAlert(false)}
+                title="Delete Task"
+            >
+                <DeleteAlert
+                    content="Are you sure you want to delete this task? This action cannot be undone."
+                    onDelete={() => deleteTask()}
+                />
+            </Modal>
+
         </DashboardLayout>
     )
 }

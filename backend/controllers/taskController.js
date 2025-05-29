@@ -19,7 +19,7 @@ const getTasks = async (req, res) => {
         "name email profileImageUrl"
       );
     } else {
-      tasks = await Task.find(...filter, assignedTo, req.user._id).populate(
+      tasks = await Task.find({ ...filter, assignedTo: req.user._id }).populate(
         "assignedTo",
         "name email profileImageUrl"
       );
@@ -28,13 +28,13 @@ const getTasks = async (req, res) => {
     // add completed todo checklist count
     tasks = await Promise.all(
       tasks.map(async (task) => {
-        const completedTodoChecklistCount = task.todoChecklist.filter(
+        const completedTodoCount = task.todoChecklist.filter(
           (item) => item.completed
         ).length;
 
         return {
           ...task._doc,
-          completedTodoChecklistCount,
+          completedTodoCount,
         };
       })
     );
@@ -405,9 +405,8 @@ const getUserDashboardData = async (req, res) => {
 
     const taskDistribution = taskStatuses.reduce((acc, status) => {
       const formatedKey = status.replace(/\s+/g, "");
-      acc[formatedKey] = taskDistributionRow.find((item) => item._id === status)
-        ? status.count
-        : 0;
+      acc[formatedKey] =
+        taskDistributionRow.find((item) => item._id === status)?.count || 0;
       return acc;
     }, {});
 
@@ -443,6 +442,7 @@ const getUserDashboardData = async (req, res) => {
       statistics: {
         totalTasks,
         pendingTasks,
+        inProgressTasks,
         completedTasks,
         overdueTasks,
       },

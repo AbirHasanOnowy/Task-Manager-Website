@@ -10,14 +10,14 @@ const SideMenu = ({ activeMenu }) => {
     const navigate = useNavigate()
 
     const handleClick = (route) => {
-        if (route === 'logout') {
-            landleLogout()
+        if (route === '/logout') {
+            handleLogout()
             return
         }
         navigate(route)
     }
 
-    const landleLogout = () => {
+    const handleLogout = () => {
         localStorage.clear()
         clearUser()
         navigate('/login')

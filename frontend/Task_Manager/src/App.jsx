@@ -13,7 +13,7 @@ import SignUp from './pages/Auth/SignUp'
 
 import PrivateRoute from './routes/PrivateRoute'
 import Dashboard from './pages/admin/Dashboard'
-import ManageTasks from './pages/admin/ManageTasks'
+import ManageTasks from './pages/Admin/ManageTasks'
 import CreateTask from './pages/Admin/CreateTask'
 import ManageUsers from './pages/admin/ManageUsers'
 

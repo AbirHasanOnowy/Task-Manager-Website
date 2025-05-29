@@ -7,7 +7,7 @@ const excelJS = require("exceljs");
 // @access Private/Admin
 const exportTasksReport = async (req, res) => {
   try {
-    const tasks = await Task.find({}).populate("asssignedTo", "name email");
+    const tasks = await Task.find({}).populate("assignedTo", "name email");
 
     const workbook = new excelJS.Workbook();
     const worksheet = workbook.addWorksheet("Tasks Report");
@@ -19,8 +19,7 @@ const exportTasksReport = async (req, res) => {
       { header: "Priority", key: "priority", width: 20 },
       { header: "Status", key: "status", width: 20 },
       { header: "Due Date", key: "dueDate", width: 20 },
-      { header: "Created By", key: "createdBy.name", width: 30 },
-      { header: "Assigned To", key: "user.name", width: 30 },
+      { header: "Assigned To", key: "assignedTo", width: 30 },
     ];
 
     tasks.forEach((task) => {
