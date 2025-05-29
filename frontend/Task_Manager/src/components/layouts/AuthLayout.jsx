@@ -7,8 +7,8 @@ const AuthLayout = ({ children }) => {
             {children}
         </div>
 
-        <div className="hidden md:flex w-[40vw] h-screen items-center justify-center bg-blue-50 bg-[url('/bluebg5.jpg')] bg-cover bg-no-repeat bg-center overflow-hidden">
-            <img src="/bluebg1.jpg" alt="front" className='w-64 lg:w-[90%]' />
+        <div className="hidden md:flex w-[40vw] h-screen items-center justify-center bg-blue-50 bg-[url('/bluebg.jpg')] bg-cover bg-no-repeat bg-center overflow-hidden">
+            {/* <img src="/bluebg.jpg" alt="front" className='w-64 lg:w-[90%]' /> */}
         </div>
 
     </div>

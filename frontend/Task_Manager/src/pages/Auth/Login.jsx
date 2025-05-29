@@ -10,6 +10,7 @@ const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const { updateUser } = useContext(UserContext) // Assuming UserContext is imported
 
@@ -35,6 +36,7 @@ const Login = () => {
 
         setError('') // Clear any previous error messages
         try {
+            setLoading(true) // Set loading state to true
             const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN, {
                 email,
                 password
@@ -58,6 +60,8 @@ const Login = () => {
             } else {
                 setError('An error occurred while logging in. Please try again.')
             }
+        } finally {
+            setLoading(false) // Reset loading state
         }
     }
     return (
@@ -88,7 +92,9 @@ const Login = () => {
                     <button
                         type="submit"
                         className="btn-primary"
-                        onClick={handleLogin}>
+                        onClick={handleLogin}
+                        disabled={loading} // Disable button while loading
+                    >
                         LOGIN
                     </button>
                     <div className="text-[13px] text-slate-800 mt-3 text-center">

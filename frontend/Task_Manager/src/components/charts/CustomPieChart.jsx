@@ -21,8 +21,9 @@ const CustomPieChart = ({ data, colors }) => {
                     outerRadius={130}
                     innerRadius={100}
                     labelLine={false}
+                    isAnimationActive={true}
                 >
-                    {data.map((entry, index) => (
+                    {data?.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
                     ))}
                 </Pie>

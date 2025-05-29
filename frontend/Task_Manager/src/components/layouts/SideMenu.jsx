@@ -42,11 +42,11 @@ const SideMenu = ({ activeMenu }) => {
                     />
                 </div>
 
-                {user?.role === 'admin' && (
-                    <div className='text-[10px] font-medium text-white bg-primary px-3 py-0.5 rounded mt-1'>
-                        Admin
-                    </div>
-                )}
+
+                <div className={`text-[12px] font-medium text-white ${user?.role === 'admin' ? 'bg-primary' : 'bg-lime-500'}  px-3 py-1 rounded mt-1`}>
+                    {user?.role === 'admin' ? 'Admin' : 'Member'}
+                </div>
+
 
                 <h5 className='text-gray-950 font-medium leading-6 mt-3'>
                     {user?.name || ''}

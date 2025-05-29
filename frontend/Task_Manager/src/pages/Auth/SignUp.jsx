@@ -15,6 +15,7 @@ const SignUp = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [adminInvitationToken, setAdminInvitationToken] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const [error, setError] = useState(null)
 
@@ -55,6 +56,8 @@ const SignUp = () => {
         }
 
         setError('') // Clear any previous error messages
+        setLoading(true) // Set loading state to true
+
 
         // Upload profile picture if provided
         if (profilePicture) {
@@ -70,8 +73,9 @@ const SignUp = () => {
                 password,
                 profileImageUrl,
                 profileImagePublicId,
-                adminInvitationToken
+                adminInviteToken: adminInvitationToken
             });
+            console.log(loading)
             const { token, role } = responde.data
             if (token) {
                 localStorage.setItem('token', token)
@@ -91,6 +95,8 @@ const SignUp = () => {
             } else {
                 setError('An error occurred while Signing up. Please try again.')
             }
+        } finally {
+            setLoading(false) // Reset loading state
         }
     }
     return (
@@ -139,10 +145,12 @@ const SignUp = () => {
 
                     <button
                         type="submit"
-                        className="btn-primary"
-                        onClick={handleSignup}>
-                        SIGN UP
+                        className={`btn-primary ${loading ? 'cursor-not-allowed opacity-50' : ''}`}
+                        disabled={loading}
+                    >
+                        {loading ? 'Signing Up...' : 'SIGN UP'}
                     </button>
+
 
                     <div className="text-[13px] text-slate-800 mt-3 text-center">
                         <p>Already have an account? {"   "}<Link to="/login" className="font-medium text-primary hover:underline">Login</Link></p>
