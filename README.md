@@ -13,6 +13,11 @@ A full-stack web application for managing tasks and teams, featuring user authen
 - Downloadable Excel reports for tasks and users
 - Responsive UI with modern design
 
+## Live Demo
+
+Access the deployed application here:  
+[https://task-manager-website-frontend.onrender.com](https://task-manager-website-frontend.onrender.com)
+
 ## Tech Stack
 
 - **Frontend:** React, Vite, Tailwind CSS
@@ -20,6 +25,29 @@ A full-stack web application for managing tasks and teams, featuring user authen
 - **Authentication:** JWT
 - **File Uploads:** Cloudinary
 - **Excel Export:** exceljs
+
+## Screenshots
+
+Below are some example screens from the application.
+
+Authentication:
+![Login Page](<screenshots/Login Page.png>)
+![SignUp Page](<screenshots/Signup Page.png>)
+
+Admin:
+![Stats](<screenshots/Admin Dashboard Stats.png>)
+![Recent Tasks](<screenshots/Admin Dashboard Recent Tasks.png>)
+![Manage Tasks](<screenshots/Admin Manage All Tasks.png>)
+![Create Task](<screenshots/Admin Create Task.png>)
+![Assign Tasks](<screenshots/Admin Assign Tasks to Members.png>)
+![Update Task](<screenshots/Admin Update Task.png>)
+![Delete Task](<screenshots/Admin Delete Task.png>)
+![Team Members](<screenshots/Team Members.png>)
+
+Member:
+![Stats](<screenshots/Member Dashboard Stats.png>)
+![Assigned Tasks](<screenshots/Member All Tasks.png>)
+![Manage Task](<screenshots/Member Manage Task.png>)
 
 ## Project Structure
 
@@ -73,7 +101,7 @@ frontend/
    ```sh
    npm start
    ```
-   The server runs on `http://localhost:8000` by default.
+   The server runs on `http://localhost:8000` by default on localuser if frontend environment is not defined.
 
 ### Frontend Setup
 
@@ -85,7 +113,12 @@ frontend/
    ```sh
    npm install
    ```
-3. Start the frontend dev server:
+3. Create a `.env` file in the `frontend/Task_Manager` directory with your environment variables (e.g., API base URL):
+   ```
+   VITE_API_URL=http://localhost:8000
+   ```
+   Adjust the value as needed for your backend deployment.
+4. Start the frontend dev server:
    ```sh
    npm run dev
    ```
