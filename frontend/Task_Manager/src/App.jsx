@@ -12,10 +12,10 @@ import Login from './pages/Auth/Login'
 import SignUp from './pages/Auth/SignUp'
 
 import PrivateRoute from './routes/PrivateRoute'
-import Dashboard from './pages/admin/Dashboard'
+import Dashboard from './pages/Admin/Dashboard'
 import ManageTasks from './pages/Admin/ManageTasks'
 import CreateTask from './pages/Admin/CreateTask'
-import ManageUsers from './pages/admin/ManageUsers'
+import ManageUsers from './pages/Admin/ManageUsers'
 
 import UserDashboard from './pages/User/UserDashboard'
 import MyTasks from './pages/User/MyTasks'
