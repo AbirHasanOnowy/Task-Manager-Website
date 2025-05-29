@@ -103,8 +103,5 @@ See [backend/routes](backend/routes/) for available API endpoints.
 
 ## License
 
-This project is for educational/demo purposes.
-
-```
-
-```
+This project is licensed under the MIT License.  
+See the [LICENSE](LICENSE) file for details.
