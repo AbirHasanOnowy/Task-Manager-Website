@@ -16,7 +16,7 @@ A full-stack web application for managing tasks and teams, featuring user authen
 ## Live Demo
 
 Access the deployed application here:  
-[https://task-manager-website-frontend.onrender.com](https://task-manager-website-frontend.onrender.com)
+[https://task-manager-website-6rjm.onrender.com](https://task-manager-website-6rjm.onrender.com)
 
 ## Tech Stack
 
