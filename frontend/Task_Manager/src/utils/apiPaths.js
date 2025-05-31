@@ -1,4 +1,4 @@
-export const BASE_URL = "https://task-manager-website-vxbt.onrender.com";
+export const BASE_URL = process.env.REACT_APP_API_URL;
 
 // utils/apiPaths.js
 export const API_PATHS = {
