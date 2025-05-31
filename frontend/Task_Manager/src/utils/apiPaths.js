@@ -1,4 +1,4 @@
-export const BASE_URL = process.env.REACT_APP_API_URL;
+export const BASE_URL = "https://task-manager-website-backend.onrender.com"; // Base URL for the API
 
 // utils/apiPaths.js
 export const API_PATHS = {
